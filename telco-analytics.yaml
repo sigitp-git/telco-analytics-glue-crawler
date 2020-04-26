@@ -3,7 +3,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 # Sample CFN YAML to demonstrate creating a crawler for Telco Analytics
 # Source: https://docs.aws.amazon.com/glue/latest/dg/populate-with-cloudformation-templates.html#sample-cfn-template-crawler-s3 
-# Rawdata to be processed located at: https://telco-data-analytics-blog.s3.amazonaws.com/rawdata.csv or s3://telco-data-analytics-blog/rawdata.csv
+# Public rawdata to be processed located at: https://telco-data-analytics-blog.s3.amazonaws.com/rawdata.csv or s3://telco-data-analytics-blog/rawdata.csv
 #
 # Parameters section contains names that are substituted in the Resources section
 # These parameters are the names the resources created in the Data Catalog
@@ -22,7 +22,7 @@ Parameters:
 #
 # Resources section defines metadata for the Data Catalog
 Resources:
-#Create IAM Role assumed by the crawler. For demonstration, this role is given all permissions.
+#Create IAM Role assumed by the crawler
   CFNRoleTelcoAnalytics:
     Type: AWS::IAM::Role
     Properties:
@@ -39,14 +39,69 @@ Resources:
       Path: "/"
       Policies:
         -
-          PolicyName: "root"
+          PolicyName: "Telco-Glue-Crawler"
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
-              -
-                Effect: "Allow"
-                Action: "*"
-                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - 'glue:*'
+                  - 's3:GetBucketLocation'
+                  - 's3:ListBucket'
+                  - 's3:ListAllMyBuckets'
+                  - 's3:GetBucketAcl'
+                  - 'ec2:DescribeVpcEndpoints'
+                  - 'ec2:DescribeRouteTables'
+                  - 'ec2:CreateNetworkInterface'
+                  - 'ec2:DeleteNetworkInterface'
+                  - 'ec2:DescribeNetworkInterfaces'
+                  - 'ec2:DescribeSecurityGroups'
+                  - 'ec2:DescribeSubnets'
+                  - 'ec2:DescribeVpcAttribute'
+                  - 'iam:ListRolePolicies'
+                  - 'iam:GetRole'
+                  - 'iam:GetRolePolicy'
+                  - 'cloudwatch:PutMetricData'
+                Resource:
+                  - '*'
+              - Effect: Allow
+                Action:
+                  - 's3:CreateBucket'
+                Resource:
+                  - 'arn:aws:s3:::aws-glue-*'
+              - Effect: Allow
+                Action:
+                  - 's3:GetObject'
+                  - 's3:PutObject'
+                  - 's3:DeleteObject'
+                Resource:
+                  - 'arn:aws:s3:::aws-glue-*/*'
+                  - 'arn:aws:s3:::*/*aws-glue-*/*'
+              - Effect: Allow
+                Action:
+                  - 's3:GetObject'
+                Resource:
+                  - 'arn:aws:s3:::crawler-public*'
+                  - 'arn:aws:s3:::aws-glue-*'
+              - Effect: Allow
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource:
+                  - 'arn:aws:logs:*:*:/aws-glue/*'
+              - Effect: Allow
+                Action:
+                  - 'ec2:CreateTags'
+                  - 'ec2:DeleteTags'
+                Condition:
+                  'ForAllValues:StringEquals':
+                    'aws:TagKeys':
+                      - aws-glue-service-resource
+                Resource:
+                  - 'arn:aws:ec2:*:*:network-interface/*'
+                  - 'arn:aws:ec2:*:*:security-group/*'
+                  - 'arn:aws:ec2:*:*:instance/*'
  # Create a database to contain tables created by the crawler
   CFNDatabaseTelcoAnalytics:
     Type: AWS::Glue::Database
@@ -67,7 +122,7 @@ Resources:
       DatabaseName: !Ref CFNDatabaseName
       Targets:
         S3Targets:
-          # Public S3 Telco Analytics raw data csv
+          # Public S3 Telco Analytics raw data csv  
           - Path: "s3://telco-data-analytics-blog/rawdata.csv"
       TablePrefix: !Ref CFNTablePrefixName
       SchemaChangePolicy:
