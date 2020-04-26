@@ -67,7 +67,7 @@ Resources:
       DatabaseName: !Ref CFNDatabaseName
       Targets:
         S3Targets:
-          # Public S3 bucket with the Telco Analytics raw data  
+          # Public S3 Telco Analytics raw data csv
           - Path: "s3://telco-data-analytics-blog/rawdata.csv"
       TablePrefix: !Ref CFNTablePrefixName
       SchemaChangePolicy:
