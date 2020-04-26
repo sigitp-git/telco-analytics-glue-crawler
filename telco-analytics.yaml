@@ -3,7 +3,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 # Sample CFN YAML to demonstrate creating a crawler for Telco Analytics
 # Source: https://docs.aws.amazon.com/glue/latest/dg/populate-with-cloudformation-templates.html#sample-cfn-template-crawler-s3 
-# Rawdata to be processed located at: https://telco-data-analytics-blog.s3.amazonaws.com/rawdata.csv or s3://telco-data-analytics-blog
+# Rawdata to be processed located at: https://telco-data-analytics-blog.s3.amazonaws.com/rawdata.csv or s3://telco-data-analytics-blog/rawdata.csv
 #
 # Parameters section contains names that are substituted in the Resources section
 # These parameters are the names the resources created in the Data Catalog
