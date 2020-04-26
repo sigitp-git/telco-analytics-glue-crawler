@@ -1,12 +1,16 @@
 
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-# Sample CFN YAML to demonstrate creating a crawler for Telco Analytics
-# Source: https://docs.aws.amazon.com/glue/latest/dg/populate-with-cloudformation-templates.html#sample-cfn-template-crawler-s3 
-# Public rawdata to be processed located at: https://telco-data-analytics-blog.s3.amazonaws.com/rawdata.csv or s3://telco-data-analytics-blog/rawdata.csv
+# Sample CloudFormation YAML to demonstrate creating a crawler for Telco Analytics
+#
+# Step a) Download public rawdata to be analyzed: https://builder2019.s3.amazonaws.com/rawdata.csv
+# Step b) Create S3 bucket <YOUR-BUCKET-NAME> and upload the rawdata.csv into your S3 bucket. In this example, the bucket name is "telco-data-analytics-blog"
 #
 # Parameters section contains names that are substituted in the Resources section
 # These parameters are the names the resources created in the Data Catalog
+#
+# To clean up resources, simply delete this CloudFormation stack from your CloudFormation console or CLI
+#
 Parameters:                                                                                                       
 # The name of the crawler to be created
   CFNCrawlerName:  
@@ -18,7 +22,6 @@ Parameters:
   CFNTablePrefixName:
     Type: String
     Default: cfn_telco_analytics_	
-#
 #
 # Resources section defines metadata for the Data Catalog
 Resources:
@@ -102,6 +105,7 @@ Resources:
                   - 'arn:aws:ec2:*:*:network-interface/*'
                   - 'arn:aws:ec2:*:*:security-group/*'
                   - 'arn:aws:ec2:*:*:instance/*'
+ #
  # Create a database to contain tables created by the crawler
   CFNDatabaseTelcoAnalytics:
     Type: AWS::Glue::Database
@@ -110,7 +114,8 @@ Resources:
       DatabaseInput:
         Name: !Ref CFNDatabaseName
         Description: "AWS Glue container to hold tables for the Telco Analytics crawler"
- # Create a crawler to crawl the rawdata on a public S3 bucket
+ #
+ # Create a crawler to crawl the rawdata on your S3 bucket
   CFNCrawlerTelcoAnalytics:
     Type: AWS::Glue::Crawler
     Properties:
@@ -122,7 +127,8 @@ Resources:
       DatabaseName: !Ref CFNDatabaseName
       Targets:
         S3Targets:
-          # Public S3 Telco Analytics raw data csv  
+          # Public S3 Telco Analytics raw data csv uploaded to your S3 bucket
+          # Change the "telco-data-analytics-blog" bucket name to your own bucket name <YOUR-BUCKET-NAME> on Step b) above
           - Path: "s3://telco-data-analytics-blog/rawdata.csv"
       TablePrefix: !Ref CFNTablePrefixName
       SchemaChangePolicy:
