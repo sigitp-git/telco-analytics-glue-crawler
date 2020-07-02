@@ -123,7 +123,7 @@ Resources:
       DatabaseName: !Ref CFNDatabaseName
       Targets:
         S3Targets:
-          - Path: "s3://serverless-analytics/telco-data-analytics-blog/rawdata.csv"
+          - Path: "s3://serverless-analytics/telco-data-analytics-blog/"
       TablePrefix: !Ref CFNTablePrefixName
       SchemaChangePolicy:
         UpdateBehavior: "UPDATE_IN_DATABASE"
