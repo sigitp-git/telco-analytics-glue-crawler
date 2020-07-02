@@ -1,10 +1,6 @@
 
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-# Sample CloudFormation YAML to demonstrate creating a crawler for Telco Analytics
-#
-# Step a) Download public rawdata to be analyzed: https://builder2019.s3.amazonaws.com/rawdata.csv
-# Step b) Create S3 bucket <YOUR-BUCKET-NAME> and upload the rawdata.csv into your S3 bucket. In this example, the bucket name is "telco-data-analytics-blog"
 #
 # Parameters section contains names that are substituted in the Resources section
 # These parameters are the names the resources created in the Data Catalog
@@ -127,9 +123,7 @@ Resources:
       DatabaseName: !Ref CFNDatabaseName
       Targets:
         S3Targets:
-          # Public S3 Telco Analytics raw data csv uploaded to your S3 bucket
-          # Change the "telco-data-analytics-blog" bucket name to your own bucket name <YOUR-BUCKET-NAME> on Step b) above
-          - Path: "s3://telco-data-analytics-blog/rawdata.csv"
+          - Path: "s3://serverless-analytics/telco-data-analytics-blog/rawdata.csv"
       TablePrefix: !Ref CFNTablePrefixName
       SchemaChangePolicy:
         UpdateBehavior: "UPDATE_IN_DATABASE"
