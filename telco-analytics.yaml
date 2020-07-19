@@ -88,10 +88,11 @@ Resources:
                 Action:
                   - 's3:GetObject'
                   - 's3:PutObject'
-                  - 's3:DeleteObject'
                 Resource:
                   - 'arn:aws:s3:::aws-glue-*/*'
                   - 'arn:aws:s3:::*/*aws-glue-*/*'
+                  - 'arn:aws:s3:::crawler-public*'
+                  - 'arn:aws:s3:::serverless-analytics*'
               - Effect: Allow
                 Action:
                   - 's3:GetObject'
