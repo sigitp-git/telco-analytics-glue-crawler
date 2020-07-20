@@ -8,7 +8,7 @@
 
 
 
-***Note:*** if you don't have access to the default S3 bucket provided on line **142** of **telco-analytics.yaml**:
+***Note:*** if you don't have access to the default S3 bucket provided on line **143** of **telco-analytics.yaml**:
 
 ```yaml
 - Path: "s3://serverless-analytics/telco-data-analytics-blog/"
