@@ -1,10 +1,4 @@
-------
-
-#
-# Parameters section contains names that are substituted in the Resources section
-# These parameters are the names the resources created in the Data Catalog
-#
-
+# 
 
 # telco-analytics-glue-crawler
 
@@ -29,3 +23,6 @@ Please download the rawdata.csv from: https://builder2019.s3.amazonaws.com/rawda
 ```
 
 Please keep in mind that the S3 bucket and your Amazon Athena/QuickSight must be in the same AWS Region. 
+
+
+
