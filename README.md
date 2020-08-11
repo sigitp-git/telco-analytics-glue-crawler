@@ -16,7 +16,7 @@
 - Path: "s3://serverless-analytics/telco-data-analytics-blog/"
 ```
 
-Please download the rawdata.csv from: https://serverless-analytics.s3.amazonaws.com/telco-data-analytics-blog/rawdata.csv, then upload it on your own S3 bucket and update line **143 of **telco-analytics.yaml**:
+Please download the rawdata.csv from: https://serverless-analytics.s3.amazonaws.com/telco-data-analytics-blog/rawdata.csv, then upload it on your own S3 bucket and update line **143** of **telco-analytics.yaml**:
 
 ```yaml
 - Path: "s3://your-own-bucket-name/rawdata.csv"
