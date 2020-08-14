@@ -1,5 +1,4 @@
 # 
-
 # telco-analytics-glue-crawler
 
 1. Execute telco-analytics.yaml using CloudFormation Console or CLI
